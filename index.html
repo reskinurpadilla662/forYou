@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Warman</title>
+
+<style>
+  /* 🎨 Gaya umum halaman */
+  body {
+    background: #f7a9b8; /* Warna latar belakang pink lembut */
+    display: flex; /* Supaya elemen bisa sejajar horizontal */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Tinggi halaman penuh layar */
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+  }
+
+  /* 📦 Pembungkus utama (kue + video) */
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 50px; /* Jarak antara kue dan video */
+  }
+
+  /* 🎂 Bagian kue */
+  .cake {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .plate {
+    width: 220px;
+    height: 10px;
+    background: #fff;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  }
+
+  /* 🍰 Lapisan kue */
+  .layer {
+    width: 180px;
+    height: 25px;
+    border-radius: 6px;
+    margin-top: -5px;
+    animation: drop 0.7s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Warna dan urutan animasi tiap lapisan */
+  .layer:nth-child(1) { background: #7b4b2a; animation-delay: 0.2s; }
+  .layer:nth-child(2) { background: #a56b3a; animation-delay: 0.7s; }
+  .layer:nth-child(3) { background: #7b4b2a; animation-delay: 1.2s; }
+  .layer:nth-child(4) { background: #a56b3a; animation-delay: 1.7s; }
+
+  /* 🍦 Krim di atas kue */
+  .cream {
+    width: 180px;
+    height: 20px;
+    background: #fff;
+    border-radius: 100% 100% 50% 50% / 50% 50% 200% 200%;
+    position: relative;
+    top: 20px;
+    animation: drop 0.8s ease-out 2.2s forwards, melt 3s ease-in-out 3s infinite alternate;
+    opacity: 0;
+  }
+
+  /* 🕯️ Lilin */
+  .candle {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background: #ffe4b5;
+    top: 80px;
+    border-radius: 3px;
+    animation: appear 0.8s ease-out 3.2s forwards;
+    opacity: 0;
+  }
+
+  /* 🔥 Api lilin */
+  .flame {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 20px;
+    background: radial-gradient(ellipse at bottom, #ffdd00 0%, #ff9100 80%);
+    border-radius: 50% 50% 60% 60%;
+    animation: flicker 0.2s infinite alternate;
+  }
+
+  /* 🧁 Tulisan ucapan */
+  h1, h2 {
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-top: 30px;
+    animation: appear 1s ease-out 3.8s forwards;
+  }
+
+  h2 {
+    color: #ffe4f2;
+    font-weight: 400;
+    margin-top: -5px;
+    animation: appear 1s ease-out 4.2s forwards;
+  }
+
+  /* ▶️ Tombol play video */
+  .play-btn {
+    background: #fff;
+    color: #ff5f96;
+    border: none;
+    padding: 10px 50px;
+    border-radius: 30px;
+    margin-top: 10px;
+    font-size: 10px;
+    cursor: pointer;
+    opacity: 0;
+    animation: appear 1s ease-out 5s forwards;
+    transition: all 0.3s;
+  }
+
+  /* Efek hover tombol */
+  .play-btn:hover {
+    background: #ff5f96;
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  /* 🎥 Kotak video disembunyikan dulu */
+  #video-box {
+    display: none;
+    animation: appear 0.5s ease-out forwards;
+  }
+
+  /* ✨ Tambahan gaya untuk video (ini bagian penting!) */
+  video {
+    border-radius: 20px; /* 🔹 Sudut video melengkung */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Bayangan lembut */
+  }
+
+  /* 🎞️ Animasi */
+  @keyframes drop {
+    from { transform: translateY(-200px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes melt {
+    0% { border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%; }
+    100% { border-radius: 50% 50% 50% 50% / 70% 70% 50% 50%; }
+  }
+
+  @keyframes flicker {
+    0% { transform: scale(1) translateX(-50%); opacity: 1; }
+    50% { transform: scale(0.9) translateX(-50%); opacity: 0.8; }
+    100% { transform: scale(1.1) translateX(-50%); opacity: 1; }
+  }
+
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 🎂 Bagian kue dan tombol -->
+  <div class="cake-section">
+    <div class="cake">
+      <div class="plate"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="cream"></div>
+      <div class="candle"><div class="flame"></div></div>
+    </div>
+    <h1>Yaumil Milad</h1>
+    <h2>Aditya Warman</h2>
+    <button class="play-btn" onclick="showVideo()">🎥 Tampilkan Video</button>
+  </div>
+
+  <!-- 🎥 Video muncul setelah klik tombol -->
+  <div id="video-box">
+    <video width="250" controls>
+      <source src="C:\Users\ASUS\Documents\VDCD\Aditya\WhatsApp Video 2025-10-29 at 22.43.17_82ac1628.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+  </div>
+
+</div>
+
+<script>
+  // 🧠 Fungsi untuk menampilkan video saat tombol diklik
+  function showVideo() {
+    document.getElementById("video-box").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
+
+
